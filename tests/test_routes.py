@@ -126,9 +126,13 @@ class TestAccountService(TestCase):
     # ADD YOUR TEST CASES HERE ...
 
     def test_read_an_account(self):
-        account = account = self._create_accounts(1)[0]
+        """It should return an account by id"""
+        account = self._create_accounts(1)[0]
         
-        read_response = self.client.get(f"BASE_URL/{account.id}")
+        read_response = self.client.get(
+            f"{BASE_URL}/{account.id}",
+            content_type="application/json"
+            )
         self.assertEqual(
             read_response.status_code, 
             status.HTTP_200_OK )
@@ -138,5 +142,14 @@ class TestAccountService(TestCase):
             deserialized_read_response['name'],
             account.name
         )
-        # post account
-        # read account
+
+    def test_accont_not_found(self):
+        """It shoudl not return an account"""
+
+        read_response = self.client.get(
+            f"{BASE_URL}/{0}",
+            content_type="application/json"
+            )
+        self.assertEqual(
+            read_response.status_code, 
+            status.HTTP_404_NOT_FOUND )
