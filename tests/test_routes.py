@@ -159,6 +159,13 @@ class TestAccountService(TestCase):
         """It should update an account"""
 
         account = self._create_accounts(1)[0]
+        test_account = AccountFactory()
+
+        update_respone = self.client.post(
+            f"{BASE_URL}", 
+            json=test_account.serialize()
+            )
+        
 
         #change name of account
         #update account
