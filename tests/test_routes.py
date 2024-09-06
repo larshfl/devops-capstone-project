@@ -154,4 +154,13 @@ class TestAccountService(TestCase):
             read_response.status_code, 
             status.HTTP_404_NOT_FOUND )
 
-# some comment
+
+    def test_update_account(self):
+        """It should update an account"""
+
+        account = self._create_accounts(1)[0]
+
+        #change name of account
+        #update account
+
+
