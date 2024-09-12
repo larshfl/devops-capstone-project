@@ -158,16 +158,29 @@ class TestAccountService(TestCase):
     def test_update_account(self):
         """It should update an account"""
 
-        account = self._create_accounts(1)[0]
         test_account = AccountFactory()
 
-        update_respone = self.client.post(
+        org_respone = self.client.post(
             f"{BASE_URL}", 
             json=test_account.serialize()
-            )
+            )        
+        self.assertEqual(
+            org_respone.status_code, 
+            status.HTTP_201_CREATED )
         
-
-        #change name of account
-        #update account
-
+        new_account = org_respone.get_json()
+        new_account['name'] = "new Name"
+        update_respone = self.client.put(
+            f"{BASE_URL}/{new_account['id']}", 
+            json=new_account
+            )
+        self.assertEqual(
+            update_respone.status_code, 
+            status.HTTP_200_OK )
+        
+        updated_account = update_respone.get_json()
+        self.assertEqual(
+            updated_account['name'],
+            "new Name"
+        )
 
