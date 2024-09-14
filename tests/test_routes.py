@@ -223,4 +223,15 @@ class TestAccountService(TestCase):
             read_response.status_code, 
             status.HTTP_404_NOT_FOUND )
 
+    def test_error_handling(self):
+        """It should test invalid routes"""
 
+        read_response = self.client.delete(
+            f"{BASE_URL}",
+            content_type="application/json"
+            )
+        
+        self.assertEqual(
+            read_response.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED
+        )
