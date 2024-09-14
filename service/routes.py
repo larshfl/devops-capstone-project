@@ -70,11 +70,8 @@ def list_accounts():
     if len(all_accounts) == 0:
         return [], status.HTTP_200_OK
     
-    serialized_list = []
-    ""WWWWWWWWWWWWWWserialized_list        print(all_accounts)    return js
-
-
-onify(serialized_list), status.HTTP_200_OK
+    serialized_list = [account.serialize() for account in all_accounts]
+    return jsonify(serialized_list), status.HTTP_200_OK
 
 
 
