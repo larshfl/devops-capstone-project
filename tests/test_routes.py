@@ -269,4 +269,19 @@ class TestAccountService(TestCase):
             'strict-origin-when-cross-origin'
         )
 
-        
+    def test_CORS_plicies(self):
+        """ It should test the presence of CORS policies"""
+
+        read_response = self.client.get(
+            "/",
+            environ_overrides=HTTPS_ENVIRON
+            )
+        self.assertEqual(
+            read_response.status_code,
+            status.HTTP_200_OK
+        )
+
+        self.assertEqual(
+            read_response.headers.get('Access-Control-Allow-Origin'),
+            '*'
+        )        
