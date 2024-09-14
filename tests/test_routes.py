@@ -184,3 +184,20 @@ class TestAccountService(TestCase):
             "new Name"
         )
 
+    def test_list_accounts(self):
+        """It should list the accounts"""
+
+        self._create_accounts(5)
+        
+        requested_accounts = self.client.get(
+            f"{BASE_URL}"
+        )
+        self.assertEqual(
+            requested_accounts.status_code, 
+            status.HTTP_200_OK )
+
+        self.assertEqual(
+            len(requested_accounts.get_json()),
+            5
+        )
+
